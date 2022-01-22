@@ -76,14 +76,14 @@ void AGameBoardPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//Sets the Locations
+	//Sets the Locations i do this in the BeginPlay to ensure location are correct
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			SphereArray[i * 3 + j]->SetRelativeLocation(FVector(Spacing * i - Spacing, Spacing * j - Spacing, 0.f));
 		}
 	}
 
-	SetColorOfSphere(4, false);
+	SpringArm->SetRelativeLocation(FVector::ZeroVector);
 }
 
 // Called every frame
