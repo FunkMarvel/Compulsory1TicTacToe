@@ -17,6 +17,7 @@ public:
 	UGameLogicComponent();
 	// setup input
 	// setup gameboard
+	
 	// on keypress iterate game state according to input
 	// track number of turns
 	// evaluate game over conditions
