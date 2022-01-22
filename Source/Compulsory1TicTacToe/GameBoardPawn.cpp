@@ -45,6 +45,7 @@ AGameBoardPawn::AGameBoardPawn()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(GetRootComponent());
 	SpringArm->SetRelativeRotation(FRotator(-50.f, 0.f, 0.f));
+	SpringArm->SetRelativeLocation(FVector::ZeroVector);
 	SpringArm->TargetArmLength = 400.f;
 
 
@@ -67,12 +68,7 @@ AGameBoardPawn::AGameBoardPawn()
 		}
 	}
 
-	//Sets the Locations
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-			SphereArray[i * 3 + j]->SetWorldLocation(FVector(100.f * i, 100.f * j, 0.f));
-		}
-	}
+	
 }
 
 // Called when the game starts or when spawned
@@ -80,8 +76,14 @@ void AGameBoardPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//SetColorOfSphere(4, false);
+	//Sets the Locations
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			SphereArray[i * 3 + j]->SetRelativeLocation(FVector(Spacing * i - Spacing, Spacing * j - Spacing, 0.f));
+		}
+	}
 
+	SetColorOfSphere(4, false);
 }
 
 // Called every frame
@@ -103,6 +105,13 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AGameBoardPawn::SetColorOfSphere(int32 index, bool bPlayerOne)
 {
+	if (index < 0 || index > SphereArray.Num())
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s SetColorOfSphere got an index higher than the sphere array size."), *GetOwner()->GetName());
+		return;
+	}
+
+
 	if (bPlayerOne)
 	{
 		SphereArray[index]->SetMaterial(0, BlueMaterial);

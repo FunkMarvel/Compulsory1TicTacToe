@@ -29,13 +29,16 @@ public:
 
 	// My designated area
 public:
-	
 
 	UFUNCTION(Category = "UFUNCTION")
 		void SetColorOfSphere(int32 index, bool bPlayerOne);
 
 	UFUNCTION(Category = "UFUNCTION")
 		void ResetGameBoard();
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
+		float Spacing = 100.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		class UStaticMeshComponent* StaticMeshComponent;
@@ -66,6 +69,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		class UMaterial* WhiteMaterial;
+
+
 
 
 };
