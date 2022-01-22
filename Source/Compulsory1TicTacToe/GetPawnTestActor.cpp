@@ -24,7 +24,7 @@ void UGetPawnTestActor::BeginPlay()
 	// ...
 	if (GameBoard != nullptr)
 	{
-		GameBoard->GetAllSpheres()[3]->SetRelativeLocation(FVector(10.f,0.f, 145.f));
+		//GameBoard->GetAllSpheres()[3]->SetRelativeLocation(FVector(10.f,0.f, 145.f));
 		UE_LOG(LogTemp, Warning, TEXT("DID FIND PAWN!!!!!!!!!\n\n\n"));
 	}
 	else

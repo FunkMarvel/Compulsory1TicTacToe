@@ -80,7 +80,7 @@ void AGameBoardPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-
+	//SetColorOfSphere(4, false);
 
 }
 
