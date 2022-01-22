@@ -18,9 +18,9 @@ AGameBoardPawn::AGameBoardPawn()
 	StaticMeshComponent->SetupAttachment(GetRootComponent());
 	SphereArray.Init(NULL, 9);
 	WhichPlayer.Init(0, 9);
-	bPlayerTurn = false;
+	
 
-	//SphereArray[0] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere1MeshComponent"));
+
 	SphereArray[0] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere0MeshComponent"));
 	SphereArray[1] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere1MeshComponent"));
 	SphereArray[2] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere2MeshComponent"));
@@ -32,10 +32,13 @@ AGameBoardPawn::AGameBoardPawn()
 	SphereArray[8] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere9MeshComponent"));
 
 
-	//materials
-	BlueMaterial = CreateDefaultSubobject<UMaterial>(TEXT("BlueMaterial"));
-	RedMaterial = CreateDefaultSubobject<UMaterial>(TEXT("RedMaterial"));
-	WhiteMaterial = CreateDefaultSubobject<UMaterial>(TEXT("WhiteMaterial"));
+	//Sets the Materials
+	static ConstructorHelpers::FObjectFinder<UMaterial> BlueMat(TEXT("Material'/Game/Materials/BlueMaterial.BlueMaterial'"));
+	BlueMaterial = BlueMat.Object;
+	static ConstructorHelpers::FObjectFinder<UMaterial> RedMat(TEXT("Material'/Game/Materials/RedMaterial.RedMaterial'"));
+	RedMaterial = RedMat.Object;
+	static ConstructorHelpers::FObjectFinder<UMaterial> WhiteMat(TEXT("Material'/Game/Materials/WhiteMaterial.WhiteMaterial'"));
+	WhiteMaterial = WhiteMat.Object;
 
 
 	//spring arm
@@ -49,23 +52,22 @@ AGameBoardPawn::AGameBoardPawn()
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 
 
-	// 
-	static ConstructorHelpers::FObjectFinder<UMaterial> TestMat(TEXT("Material'/Game/Materials/WhiteMaterial.WhiteMaterial'"));
-
-	int ArraySize = WhichPlayer.Num();
+	
+	//gets the Sphere Mesh
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereMesh(TEXT("StaticMesh'/Game/Models/MaterialSphere.MaterialSphere'"));
 
-
+	//sets the mesh and start Matierial
+	int ArraySize = WhichPlayer.Num();
 	if (SphereMesh.Succeeded()) {
 		for (int i = 0; i < ArraySize; i++) {
 			SphereArray[i]->SetStaticMesh(SphereMesh.Object);
-			SphereArray[i]->SetMaterial(0, TestMat.Object);
+			SphereArray[i]->SetMaterial(0, WhiteMaterial);
 			//SphereArray[i]->SetRelativeLocation(FVector(100.f, 0.f, 0.f));
 
 		}
 	}
 
-
+	//Sets the Locations
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			SphereArray[i * 3 + j]->SetWorldLocation(FVector(100.f * i, 100.f * j, 0.f));
@@ -99,47 +101,26 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 }
 
-TArray<UStaticMeshComponent*> AGameBoardPawn::GetAllSpheres()
+void AGameBoardPawn::SetColorOfSphere(int32 index, bool bPlayerOne)
 {
-	return SphereArray;
+	if (bPlayerOne)
+	{
+		SphereArray[index]->SetMaterial(0, BlueMaterial);
+	}
+	else
+	{
+		SphereArray[index]->SetMaterial(0, RedMaterial);
+	}
+
+	return;
 }
 
-void AGameBoardPawn::OnPressed1() {
-
-	
-}
-void AGameBoardPawn::OnPressed2() {
-
-
-}
-
-void AGameBoardPawn::OnPressed3() {
-
-
-}
-
-void AGameBoardPawn::OnPressed4() {
-
-
-}
-void AGameBoardPawn::OnPressed5() {
-
-
-}
-void AGameBoardPawn::OnPressed6() {
-
-
-}
-void AGameBoardPawn::OnPressed7() {
-
-
-}
-void AGameBoardPawn::OnPressed8() {
-
-
-}
-void AGameBoardPawn::OnPressed9() {
-
-
+void AGameBoardPawn::ResetGameBoard()
+{
+	for (int32 i = 0; i < SphereArray.Num(); i++)
+	{
+		SphereArray[i]->SetMaterial(0, WhiteMaterial);
+	}
+	return;
 }
 

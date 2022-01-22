@@ -29,10 +29,13 @@ public:
 
 	// My designated area
 public:
-	UFUNCTION(Category = "UFUNCTION")
-		TArray<UStaticMeshComponent*> GetAllSpheres();
-
 	
+
+	UFUNCTION(Category = "UFUNCTION")
+		void SetColorOfSphere(int32 index, bool bPlayerOne);
+
+	UFUNCTION(Category = "UFUNCTION")
+		void ResetGameBoard();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		class UStaticMeshComponent* StaticMeshComponent;
@@ -44,8 +47,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		TArray<int32> WhichPlayer;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
-		bool bPlayerTurn;
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
+		bool bPlayerTurn;*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		class UCameraComponent* Camera;
@@ -65,31 +68,4 @@ public:
 		class UMaterial* WhiteMaterial;
 
 
-	//Functions
-	UFUNCTION(Category = "UFUNCTION")
-		void OnPressed1();
-
-	UFUNCTION(Category = "UFUNCTION")
-		void OnPressed2();
-
-	UFUNCTION(Category = "UFUNCTION")
-		void OnPressed3();
-
-	UFUNCTION(Category = "UFUNCTION")
-		void OnPressed4();
-
-	UFUNCTION(Category = "UFUNCTION")
-		void OnPressed5();
-
-	UFUNCTION(Category = "UFUNCTION")
-		void OnPressed6();
-
-	UFUNCTION(Category = "UFUNCTION")
-		void OnPressed7();
-
-	UFUNCTION(Category = "UFUNCTION")
-		void OnPressed8();
-
-	UFUNCTION(Category = "UFUNCTION")
-		void OnPressed9();
 };
