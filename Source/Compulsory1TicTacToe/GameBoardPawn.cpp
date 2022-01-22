@@ -50,10 +50,10 @@ AGameBoardPawn::AGameBoardPawn()
 
 
 	// 
-	static ConstructorHelpers::FObjectFinder<UMaterial> TestMat(TEXT("Material'/Game/WhiteMat.WhiteMat'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> TestMat(TEXT("Material'/Game/Materials/WhiteMaterial.WhiteMaterial'"));
 
 	int ArraySize = WhichPlayer.Num();
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereMesh(TEXT("StaticMesh'/Game/StarterContent/Props/MaterialSphere.MaterialSphere'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereMesh(TEXT("StaticMesh'/Game/Models/MaterialSphere.MaterialSphere'"));
 
 
 	if (SphereMesh.Succeeded()) {
@@ -94,11 +94,19 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+
+
+
+}
+
+TArray<UStaticMeshComponent*> AGameBoardPawn::GetAllSpheres()
+{
+	return SphereArray;
 }
 
 void AGameBoardPawn::OnPressed1() {
 
-
+	
 }
 void AGameBoardPawn::OnPressed2() {
 

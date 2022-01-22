@@ -26,10 +26,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	// My place
-public:
+
 	// My designated area
 public:
+	UFUNCTION(Category = "UFUNCTION")
+		TArray<UStaticMeshComponent*> GetAllSpheres();
+
+	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		class UStaticMeshComponent* StaticMeshComponent;
 
