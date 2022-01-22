@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-01-22T15:32:04.896Z" agent="5.0 (Windows)" etag="wmvj14StfUlNXjqw4Z5q" version="16.4.5" type="github">
+<mxfile host="app.diagrams.net" modified="2022-01-22T15:32:34.184Z" agent="5.0 (Windows)" etag="WE6mLTKnWqyvXB8sTL84" version="16.4.5" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="2062" dy="1140" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -38,15 +38,6 @@
         </mxCell>
         <mxCell id="xPTs74AObO3mZD0Gcf_9-2" value="Check if chosen input is valid" style="rhombus;whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="180" y="390" width="80" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="eV3Ybe5BtaYTuq8RHTYP-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="xPTs74AObO3mZD0Gcf_9-8" target="xPTs74AObO3mZD0Gcf_9-2">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="190" y="430" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="80" y="560" />
-              <mxPoint x="80" y="430" />
-            </Array>
-          </mxGeometry>
         </mxCell>
         <mxCell id="xPTs74AObO3mZD0Gcf_9-8" value="Change color of chosen sphere" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="160" y="525" width="120" height="60" as="geometry" />
