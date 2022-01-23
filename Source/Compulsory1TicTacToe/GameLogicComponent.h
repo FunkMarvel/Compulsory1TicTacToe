@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "GameLogicComponent.generated.h"
 #include "Containers/Array.h"
+#include "GameLogicComponent.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -26,7 +26,11 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	// handles input:
 	void SetupInput();
+
+	// functions called on keypress:
 	void OnPress1();
 	void OnPress2();
 	void OnPress3();
@@ -36,11 +40,21 @@ protected:
 	void OnPress7();
 	void OnPress8();
 	void OnPress9();
+
+
+	bool CheckAvailability(int32 index);
+	void UpdateBoardState(int32 index);
+	bool CheckWin();
 	
 	UInputComponent* PlayerInputComponent;
-	TArray<char> BoardState;
-	bool bPlayerTurn;
+
+	class AGameBoardPawn* GameBoard = nullptr;
+	TArray<ANSICHAR> BoardState;
+	int32 BoardWidth;
+	
+	bool bPlayerOne;
 	int32 TurnCounter;
+
 
 public:	
 	// Called every frame

@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "GameBoardPawn.h"
 #include "GameLogicComponent.h"
 
 // Sets default values for this component's properties
@@ -9,6 +9,13 @@ UGameLogicComponent::UGameLogicComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
+	bPlayerOne = true;
+	TurnCounter = 0;
+	BoardWidth = 3;
+
+	BoardState.Init(' ', 9);
+
+	GameBoard = (AGameBoardPawn*)GetOwner();
 
 	// ...
 }
@@ -16,27 +23,26 @@ UGameLogicComponent::UGameLogicComponent()
 
 void UGameLogicComponent::SetupInput()
 {
-	PlayerInputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	PlayerInputComponent = GameBoard->PlayerInputComponent;
 
 	if (PlayerInputComponent != nullptr)
 	{
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress1);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress2);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress3);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress4);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress5);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress6);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress7);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress8);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress9);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &UGameLogicComponent::OnPress1);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &UGameLogicComponent::OnPress2);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &UGameLogicComponent::OnPress3);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &UGameLogicComponent::OnPress4);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &UGameLogicComponent::OnPress5);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &UGameLogicComponent::OnPress6);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &UGameLogicComponent::OnPress7);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &UGameLogicComponent::OnPress8);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &UGameLogicComponent::OnPress9);
 	}
 }
 
 void UGameLogicComponent::OnPress1()
 {
-	// check availability
-	// switch color and update game state
-	// perform win check
+	if (CheckAvailability(1)) UpdateBoardState(1);	// switch color and update game state
+	if (CheckWin());								// perform win check
 }
 
 void UGameLogicComponent::OnPress2()
@@ -69,6 +75,60 @@ void UGameLogicComponent::OnPress8()
 
 void UGameLogicComponent::OnPress9()
 {
+}
+
+bool UGameLogicComponent::CheckWin()
+{
+	// Function that checks entire board and returns a bool of value true
+	// if a win has been reached and value false if no win has been reached.
+
+	bool win{ false };  // return value.
+
+	// looping through BoardState:
+	for (int i = 0; i < BoardWidth; i++)
+	{
+		// checking row number i for win and returns true if true:
+		win = (BoardState[i * BoardWidth] == BoardState[i * BoardWidth + 1] && BoardState[i * BoardWidth] == BoardState[i * BoardWidth + 2]);
+		if (win) return win;
+
+		// checking column number i for win and returns true if true:
+		win = (BoardState[i] == BoardState[i + BoardWidth] && BoardState[i] == BoardState[i + 2 * BoardWidth]);
+		if (win) return win;
+	}
+
+	// checks upper-left to lower-right diagonal for win and returns true if true:
+	win = (BoardState[0] == BoardState[BoardWidth + 1] && BoardState[0] == BoardState[2 * BoardWidth + 2]);
+	if (win) return win;
+
+	// checks lower-left to upper-right diagonal for win and returns true if true:
+	win = (BoardState[2] == BoardState[BoardWidth + 1] && BoardState[2] == BoardState[2 * BoardWidth]);
+	if (win) return win;
+
+	return win;  // returns false if end of function is reached. 
+}
+
+bool UGameLogicComponent::CheckAvailability(int32 index)
+{
+	if (BoardState[index] == ' ') return true;
+	return false;
+}
+
+void UGameLogicComponent::UpdateBoardState(int32 index)
+{
+	//GameBoard = (AGameBoardPawn*)GetOwner();
+	// ...
+	if (GameBoard != nullptr)
+	{
+		GameBoard->SetColorOfSphere(index, bPlayerOne);
+		UE_LOG(LogTemp, Warning, TEXT("DID FIND PAWN!!!!!!!!!\n\n\n"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s"));
+	}
+
+	if (bPlayerOne) BoardState[index] = 'x';
+	else BoardState[index] = 'o';
 }
 
 // Called when the game starts
