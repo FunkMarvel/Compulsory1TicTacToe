@@ -14,6 +14,63 @@ UGameLogicComponent::UGameLogicComponent()
 }
 
 
+void UGameLogicComponent::SetupInput()
+{
+	PlayerInputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+
+	if (PlayerInputComponent != nullptr)
+	{
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress1);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress2);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress3);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress4);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress5);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress6);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress7);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress8);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &OnPress9);
+	}
+}
+
+void UGameLogicComponent::OnPress1()
+{
+	// check availability
+	// switch color and update game state
+	// perform win check
+}
+
+void UGameLogicComponent::OnPress2()
+{
+}
+
+void UGameLogicComponent::OnPress3()
+{
+}
+
+void UGameLogicComponent::OnPress4()
+{
+}
+
+void UGameLogicComponent::OnPress5()
+{
+}
+
+void UGameLogicComponent::OnPress6()
+{
+}
+
+void UGameLogicComponent::OnPress7()
+{
+}
+
+void UGameLogicComponent::OnPress8()
+{
+}
+
+void UGameLogicComponent::OnPress9()
+{
+}
+
 // Called when the game starts
 void UGameLogicComponent::BeginPlay()
 {

@@ -9,5 +9,5 @@ AGamePlayerController::AGamePlayerController() {
 void AGamePlayerController::SetupInputComponent() {
 	Super::SetupInputComponent();
 
-	InputComponent()->BindAction("PickSphere", IE_Pressed, this, &AGamePlayerController::UpdateBoard);
+	/*InputComponent()->BindAction("PickSphere", IE_Pressed, this, &AGamePlayerController::UpdateBoard);*/
 }
