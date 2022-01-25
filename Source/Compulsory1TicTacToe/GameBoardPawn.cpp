@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Containers/Array.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -278,12 +279,12 @@ void AGameBoardPawn::SetSphereLocations(){
 	for (int i = 0; i < SphereArray.Num(); i++) {
 		if (i == LastPos) {
 			FVector Location = SphereArray[i]->GetRelativeLocation();
-			Location.Z = GetActorLocation().Z + 100.f;
+			Location.Z = FMath::FInterpTo(Location.Z, GetActorLocation().Z + 100.f, UGameplayStatics::GetWorldDeltaSeconds(this), 5.f);
 			SphereArray[i]->SetRelativeLocation(Location);
 		}	
 		else {
 			FVector Location = SphereArray[i]->GetRelativeLocation();
-			Location.Z = GetActorLocation().Z;
+			Location.Z = FMath::FInterpTo(Location.Z, GetActorLocation().Z, UGameplayStatics::GetWorldDeltaSeconds(this), 5.f);
 			SphereArray[i]->SetRelativeLocation(Location);
 		}
 	}

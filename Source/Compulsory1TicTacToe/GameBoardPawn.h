@@ -62,10 +62,12 @@ public:
 	UFUNCTION(Category = "UFUNCTION")
 		void ResetGameBoard();
 	
-	int DebugInt = 0.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		float Spacing = 100.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
+		float Height = 100.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		class UStaticMeshComponent* StaticMeshComponent;
