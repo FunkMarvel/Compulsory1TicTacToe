@@ -144,7 +144,9 @@ void AGameBoardPawn::OnPress9()
 
 void AGameBoardPawn::OnAnyPress(int32 index)
 {
+	UE_LOG(LogTemp, Warning, TEXT("PRESSU DESUUUUU!"));
 	if (BoardState[index] == ' ') {
+		UE_LOG(LogTemp, Warning, TEXT("ACCEPTED PRESS!"));
 		UpdateBoardState(index);	// switch color and update game state
 		bool win = CheckWin();
 		LastPos = index;
