@@ -86,6 +86,109 @@ void AGameBoardPawn::BeginPlay()
 	SpringArm->SetRelativeLocation(FVector::ZeroVector);
 }
 
+void AGameBoardPawn::OnPress1()
+{
+	int32 index{ 0 };
+
+	if (BoardState[index] == ' ') {
+		UpdateBoardState(index);	// switch color and update game state
+		if (CheckWin() && bPlayerOne) {
+			UE_LOG(LogTemp, Warning, TEXT("Player 1 wins!"));
+		}
+		else if (CheckWin() && !bPlayerOne) {
+			UE_LOG(LogTemp, Warning, TEXT("Player 2 wins!"));
+		}
+	}
+}
+
+void AGameBoardPawn::OnPress2()
+{
+}
+
+void AGameBoardPawn::OnPress3()
+{
+}
+
+void AGameBoardPawn::OnPress4()
+{
+}
+
+void AGameBoardPawn::OnPress5()
+{
+}
+
+void AGameBoardPawn::OnPress6()
+{
+}
+
+void AGameBoardPawn::OnPress7()
+{
+}
+
+void AGameBoardPawn::OnPress8()
+{
+}
+
+void AGameBoardPawn::OnPress9()
+{
+}
+
+void AGameBoardPawn::UpdateBoardState(int32 index)
+{
+	//Updates internal game state and sphere materials.
+	//GameBoard = (AGameBoardPawn*)GetOwner();
+	// ...
+	if (GameBoard != nullptr)
+	{
+		GameBoard->SetColorOfSphere(index, bPlayerOne);
+		UE_LOG(LogTemp, Warning, TEXT("DID FIND PAWN!!!!!!!!!\n\n\n"));
+
+		if (bPlayerOne) {
+			BoardState[index] = 'x';
+			UE_LOG(LogTemp, Warning, TEXT("Player 1 input: "));
+		}
+		else {
+			BoardState[index] = 'o';
+			UE_LOG(LogTemp, Warning, TEXT("Player 2 input: "));
+		}
+		TurnCounter++;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s"));
+	}
+}
+
+bool AGameBoardPawn::CheckWin()
+{
+	// Function that checks entire board and returns a bool of value true
+	// if a win has been reached and value false if no win has been reached.
+
+	bool win{ false };  // return value.
+
+	// looping through BoardState:
+	for (int i = 0; i < BoardWidth; i++)
+	{
+		// checking row number i for win and returns true if true:
+		win = (BoardState[i * BoardWidth] == BoardState[i * BoardWidth + 1] && BoardState[i * BoardWidth] == BoardState[i * BoardWidth + 2]);
+		if (win) return win;
+
+		// checking column number i for win and returns true if true:
+		win = (BoardState[i] == BoardState[i + BoardWidth] && BoardState[i] == BoardState[i + 2 * BoardWidth]);
+		if (win) return win;
+	}
+
+	// checks upper-left to lower-right diagonal for win and returns true if true:
+	win = (BoardState[0] == BoardState[BoardWidth + 1] && BoardState[0] == BoardState[2 * BoardWidth + 2]);
+	if (win) return win;
+
+	// checks lower-left to upper-right diagonal for win and returns true if true:
+	win = (BoardState[2] == BoardState[BoardWidth + 1] && BoardState[2] == BoardState[2 * BoardWidth]);
+	if (win) return win;
+
+	return win;  // returns false if end of function is reached. 
+}
+
 // Called every frame
 void AGameBoardPawn::Tick(float DeltaTime)
 {
@@ -98,7 +201,18 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-
+	if (PlayerInputComponent != nullptr)
+	{
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress1);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress2);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress3);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress4);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress5);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress6);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress7);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress8);
+		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress9);
+	}
 
 
 }
