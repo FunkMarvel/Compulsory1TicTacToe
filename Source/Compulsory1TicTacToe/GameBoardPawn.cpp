@@ -47,7 +47,7 @@ AGameBoardPawn::AGameBoardPawn()
 	SpringArm->SetupAttachment(GetRootComponent());
 	SpringArm->SetRelativeRotation(FRotator(-50.f, 0.f, 0.f));
 	SpringArm->SetRelativeLocation(FVector::ZeroVector);
-	SpringArm->TargetArmLength = 400.f;
+	SpringArm->TargetArmLength = 500.f;
 
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));

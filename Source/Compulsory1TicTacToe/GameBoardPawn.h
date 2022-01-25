@@ -64,7 +64,7 @@ public:
 	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
-		float Spacing = 100.f;
+		float Spacing = 40.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		float Height = 100.f;
