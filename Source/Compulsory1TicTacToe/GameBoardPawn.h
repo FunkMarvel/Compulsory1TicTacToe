@@ -36,6 +36,10 @@ public:
 	UFUNCTION(Category = "UFUNCTION")
 		void ResetGameBoard();
 
+	UFUNCTION()
+		void DebugVoid();
+	
+	int DebugInt = 0.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		float Spacing = 100.f;

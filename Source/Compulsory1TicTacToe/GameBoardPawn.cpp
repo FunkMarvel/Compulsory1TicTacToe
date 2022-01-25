@@ -40,6 +40,8 @@ AGameBoardPawn::AGameBoardPawn()
 	static ConstructorHelpers::FObjectFinder<UMaterial> WhiteMat(TEXT("Material'/Game/Materials/WhiteMaterial.WhiteMaterial'"));
 	WhiteMaterial = WhiteMat.Object;
 
+	
+
 
 	//spring arm
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
@@ -98,7 +100,7 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-
+	PlayerInputComponent->BindAction("H", IE_Pressed, this, &AGameBoardPawn::DebugVoid);
 
 
 }
@@ -132,4 +134,16 @@ void AGameBoardPawn::ResetGameBoard()
 	}
 	return;
 }
+
+void AGameBoardPawn::DebugVoid()
+{
+	SetColorOfSphere(DebugInt, true);
+	DebugInt++;
+	if (SphereArray.Num() == DebugInt)
+	{
+		DebugInt = 0;
+	}
+}
+
+
 
