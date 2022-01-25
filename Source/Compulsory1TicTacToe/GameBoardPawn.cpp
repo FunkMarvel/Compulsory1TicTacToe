@@ -66,6 +66,8 @@ AGameBoardPawn::AGameBoardPawn()
 			SphereArray[i]->SetMaterial(0, WhiteMaterial);
 			//SphereArray[i]->SetRelativeLocation(FVector(100.f, 0.f, 0.f));
 
+			//Set initial board state:
+			BoardState[i] = '0' + i;
 		}
 	}
 
@@ -146,7 +148,7 @@ void AGameBoardPawn::OnPress9()
 void AGameBoardPawn::OnAnyPress(int32 index)
 {
 	UE_LOG(LogTemp, Warning, TEXT("PRESSU DESUUUUU!"));
-	if (BoardState[index] == ' ') {
+	if (BoardState[index] != 'x' && BoardState[index] != 'o') {
 		UE_LOG(LogTemp, Warning, TEXT("ACCEPTED PRESS!"));
 		UpdateBoardState(index);	// switch color and update game state
 		bool win = CheckWin();
@@ -188,6 +190,7 @@ void AGameBoardPawn::UpdateBoardState(int32 index)
 
 bool AGameBoardPawn::CheckWin()
 {
+	UE_LOG(LogTemp, Warning, TEXT("Checking for win"));
 	// Function that checks entire board and returns a bool of value true
 	// if a win has been reached and value false if no win has been reached.
 
@@ -268,6 +271,9 @@ void AGameBoardPawn::ResetGameBoard()
 	for (int32 i = 0; i < SphereArray.Num(); i++)
 	{
 		SphereArray[i]->SetMaterial(0, WhiteMaterial);
+
+		//Set initial board state:
+		BoardState[i] = '0' + i;
 	}
 	TurnCounter = 0;
 	bPlayerOne = true;
