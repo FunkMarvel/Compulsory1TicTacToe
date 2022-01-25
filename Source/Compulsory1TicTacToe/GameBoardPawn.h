@@ -36,7 +36,7 @@ protected:
 	bool CheckWin();
 
 	TArray<TCHAR> BoardState;
-	int32 BoardWidth;
+	int32 BoardWidth = 3;
 
 	bool bPlayerOne;
 	int32 TurnCounter;
