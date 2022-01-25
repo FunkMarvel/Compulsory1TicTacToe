@@ -28,7 +28,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	// handles input:
-	void SetupInput();
+	void SetupInput(UInputComponent* PlayerInputComponent);
 
 	// functions called on keypress:
 	void OnPress1();
@@ -49,7 +49,7 @@ protected:
 	UInputComponent* PlayerInputComponent;
 
 	class AGameBoardPawn* GameBoard = nullptr;
-	TArray<ANSICHAR> BoardState;
+	TArray<TCHAR> BoardState;
 	int32 BoardWidth;
 	
 	bool bPlayerOne;
