@@ -19,6 +19,27 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// functions called on keypress:
+	void OnPress1();
+	void OnPress2();
+	void OnPress3();
+	void OnPress4();
+	void OnPress5();
+	void OnPress6();
+	void OnPress7();
+	void OnPress8();
+	void OnPress9();
+
+	void UpdateBoardState(int32 index);
+	bool CheckWin();
+
+	class AGameBoardPawn* GameBoard = nullptr;
+	TArray<TCHAR> BoardState;
+	int32 BoardWidth;
+
+	bool bPlayerOne;
+	int32 TurnCounter;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
