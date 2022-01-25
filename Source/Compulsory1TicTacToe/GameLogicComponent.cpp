@@ -21,9 +21,8 @@ UGameLogicComponent::UGameLogicComponent()
 }
 
 
-void UGameLogicComponent::SetupInput()
+void UGameLogicComponent::SetupInput(UInputComponent* PlayerInputComponent)
 {
-	PlayerInputComponent = GameBoard->PlayerInputComponent;
 
 	if (PlayerInputComponent != nullptr)
 	{
@@ -41,8 +40,17 @@ void UGameLogicComponent::SetupInput()
 
 void UGameLogicComponent::OnPress1()
 {
-	if (CheckAvailability(1)) UpdateBoardState(1);	// switch color and update game state
-	if (CheckWin());								// perform win check
+	int32 index{ 0 };
+
+	if (BoardState[index] == ' ') {
+		UpdateBoardState(index);	// switch color and update game state
+		if (CheckWin() && bPlayerOne) {
+			UE_LOG(LogTemp, Warning, TEXT("Player 1 wins!"));
+		}
+		else if (CheckWin() && !bPlayerOne) {
+			UE_LOG(LogTemp, Warning, TEXT("Player 2 wins!"));
+		}
+	}
 }
 
 void UGameLogicComponent::OnPress2()
@@ -121,14 +129,21 @@ void UGameLogicComponent::UpdateBoardState(int32 index)
 	{
 		GameBoard->SetColorOfSphere(index, bPlayerOne);
 		UE_LOG(LogTemp, Warning, TEXT("DID FIND PAWN!!!!!!!!!\n\n\n"));
+
+		if (bPlayerOne) { 
+			BoardState[index] = 'x';
+			UE_LOG(LogTemp, Warning, TEXT("Player 1 input: "));
+		}
+		else {
+			BoardState[index] = 'o';
+			UE_LOG(LogTemp, Warning, TEXT("Player 2 input: "));
+		}
 	}
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s"));
 	}
 
-	if (bPlayerOne) BoardState[index] = 'x';
-	else BoardState[index] = 'o';
 }
 
 // Called when the game starts
