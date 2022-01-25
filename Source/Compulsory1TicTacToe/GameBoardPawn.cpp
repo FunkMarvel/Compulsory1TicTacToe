@@ -21,7 +21,7 @@ AGameBoardPawn::AGameBoardPawn()
 	BoardState.Init(' ', 9);
 	
 	
-
+	//gets the spghere meshes
 	SphereArray[0] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere0MeshComponent"));
 	SphereArray[1] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere1MeshComponent"));
 	SphereArray[2] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere2MeshComponent"));
@@ -31,6 +31,8 @@ AGameBoardPawn::AGameBoardPawn()
 	SphereArray[6] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere6MeshComponent"));
 	SphereArray[7] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere7MeshComponent"));
 	SphereArray[8] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere9MeshComponent"));
+
+	
 
 
 	//Sets the Materials
@@ -70,8 +72,6 @@ AGameBoardPawn::AGameBoardPawn()
 			BoardState[i] = '0' + i;
 		}
 	}
-
-	
 }
 
 // Called when the game starts or when spawned

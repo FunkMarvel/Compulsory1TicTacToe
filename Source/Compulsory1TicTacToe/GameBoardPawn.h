@@ -73,8 +73,9 @@ public:
 		class UStaticMeshComponent* StaticMeshComponent;
 
 	// Array that keeps the 9 spheres
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MyTools)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		TArray<UStaticMeshComponent*> SphereArray;
+
 
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		bool bPlayerTurn;*/
