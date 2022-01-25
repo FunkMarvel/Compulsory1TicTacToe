@@ -150,13 +150,13 @@ void AGameBoardPawn::OnAnyPress(int32 index)
 		LastPos = index;
 
 		if (win && bPlayerOne) {
-			UE_LOG(LogTemp, Warning, TEXT("Player 1 wins!"));
+			UE_LOG(LogTemp, Warning, TEXT("Player 1 wins!\nPress 'Enter' to reset."));
 		}
 		else if (win && !bPlayerOne) {
-			UE_LOG(LogTemp, Warning, TEXT("Player 2 wins!"));
+			UE_LOG(LogTemp, Warning, TEXT("Player 2 wins!\nPress 'Enter' to reset."));
 		}
 		else if (TurnCounter >= 9) {
-			UE_LOG(LogTemp, Warning, TEXT("It's a draw!"));
+			UE_LOG(LogTemp, Warning, TEXT("It's a draw!\nPress 'Enter' to reset."));
 		}
 		bPlayerOne = !bPlayerOne;
 	}
@@ -231,6 +231,7 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	if (PlayerInputComponent != nullptr)
 	{
+		// pick sphere actions:
 		PlayerInputComponent->BindAction("PressOne", IE_Pressed, this, &AGameBoardPawn::OnPress1);
 		PlayerInputComponent->BindAction("PressTwo", IE_Pressed, this, &AGameBoardPawn::OnPress2);
 		PlayerInputComponent->BindAction("PressThree", IE_Pressed, this, &AGameBoardPawn::OnPress3);
@@ -240,6 +241,9 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		PlayerInputComponent->BindAction("PressSeven", IE_Pressed, this, &AGameBoardPawn::OnPress7);
 		PlayerInputComponent->BindAction("PressEight", IE_Pressed, this, &AGameBoardPawn::OnPress8);
 		PlayerInputComponent->BindAction("PressNine", IE_Pressed, this, &AGameBoardPawn::OnPress9);
+
+		//reset game action:
+		PlayerInputComponent->BindAction("PressEnterReset", IE_Pressed, this, &AGameBoardPawn::ResetGameBoard);
 	}
 }
 
