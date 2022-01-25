@@ -19,7 +19,7 @@ AGameBoardPawn::AGameBoardPawn()
 	SphereArray.Init(NULL, 9);
 	WhichPlayer.Init(0, 9);
 	
-
+	
 
 	SphereArray[0] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere0MeshComponent"));
 	SphereArray[1] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere1MeshComponent"));
@@ -83,80 +83,104 @@ void AGameBoardPawn::BeginPlay()
 		}
 	}
 
+
 	SpringArm->SetRelativeLocation(FVector::ZeroVector);
+	UE_LOG(LogTemp, Warning, TEXT("Welcome! Player 1 press number of chosen sphere to begin."));
 }
 
 void AGameBoardPawn::OnPress1()
 {
 	int32 index{ 0 };
-
-	if (BoardState[index] == ' ') {
-		UpdateBoardState(index);	// switch color and update game state
-		if (CheckWin() && bPlayerOne) {
-			UE_LOG(LogTemp, Warning, TEXT("Player 1 wins!"));
-		}
-		else if (CheckWin() && !bPlayerOne) {
-			UE_LOG(LogTemp, Warning, TEXT("Player 2 wins!"));
-		}
-	}
+	OnAnyPress(index);
 }
 
 void AGameBoardPawn::OnPress2()
 {
+	int32 index{ 1 };
+	OnAnyPress(index);
 }
 
 void AGameBoardPawn::OnPress3()
 {
+	int32 index{ 2 };
+	OnAnyPress(index);
 }
 
 void AGameBoardPawn::OnPress4()
 {
+	int32 index{ 3 };
+	OnAnyPress(index);
 }
 
 void AGameBoardPawn::OnPress5()
 {
+	int32 index{ 4 };
+	OnAnyPress(index);
 }
 
 void AGameBoardPawn::OnPress6()
 {
+	int32 index{ 5 };
+	OnAnyPress(index);
 }
 
 void AGameBoardPawn::OnPress7()
 {
+	int32 index{ 6 };
+	OnAnyPress(index);
 }
 
 void AGameBoardPawn::OnPress8()
 {
+	int32 index{ 7 };
+	OnAnyPress(index);
 }
 
 void AGameBoardPawn::OnPress9()
 {
+	int32 index{ 8 };
+	OnAnyPress(index);
+}
+
+void AGameBoardPawn::OnAnyPress(int32 index)
+{
+	if (BoardState[index] == ' ') {
+		UpdateBoardState(index);	// switch color and update game state
+		bool win = CheckWin();
+		LastPos = index;
+
+		if (win && bPlayerOne) {
+			UE_LOG(LogTemp, Warning, TEXT("Player 1 wins!"));
+		}
+		else if (win && !bPlayerOne) {
+			UE_LOG(LogTemp, Warning, TEXT("Player 2 wins!"));
+		}
+		else if (TurnCounter >= 9) {
+			UE_LOG(LogTemp, Warning, TEXT("It's a draw!"));
+		}
+		bPlayerOne = !bPlayerOne;
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("Spot taken, try again."));
+	}
 }
 
 void AGameBoardPawn::UpdateBoardState(int32 index)
 {
 	//Updates internal game state and sphere materials.
-	//GameBoard = (AGameBoardPawn*)GetOwner();
-	// ...
-	if (GameBoard != nullptr)
-	{
-		GameBoard->SetColorOfSphere(index, bPlayerOne);
-		UE_LOG(LogTemp, Warning, TEXT("DID FIND PAWN!!!!!!!!!\n\n\n"));
 
-		if (bPlayerOne) {
-			BoardState[index] = 'x';
-			UE_LOG(LogTemp, Warning, TEXT("Player 1 input: "));
-		}
-		else {
-			BoardState[index] = 'o';
-			UE_LOG(LogTemp, Warning, TEXT("Player 2 input: "));
-		}
-		TurnCounter++;
+	SetColorOfSphere(index, bPlayerOne);
+	UE_LOG(LogTemp, Warning, TEXT("DID FIND PAWN!!!!!!!!!\n\n\n"));
+
+	if (bPlayerOne) {
+		BoardState[index] = 'x';
+		UE_LOG(LogTemp, Warning, TEXT("Player 1 input: "));
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("%s"));
+	else {
+		BoardState[index] = 'o';
+		UE_LOG(LogTemp, Warning, TEXT("Player 2 input: "));
 	}
+	TurnCounter++;
 }
 
 bool AGameBoardPawn::CheckWin()
@@ -194,6 +218,8 @@ void AGameBoardPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	SetSphereLocations();
+
 }
 
 // Called to bind functionality to input
@@ -203,18 +229,16 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	if (PlayerInputComponent != nullptr)
 	{
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress1);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress2);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress3);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress4);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress5);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress6);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress7);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress8);
-		PlayerInputComponent->BindAction("MyAction", IE_Pressed, this, &GameBoardPawn::OnPress9);
+		PlayerInputComponent->BindAction("PressOne", IE_Pressed, this, &AGameBoardPawn::OnPress1);
+		PlayerInputComponent->BindAction("PressTwo", IE_Pressed, this, &AGameBoardPawn::OnPress2);
+		PlayerInputComponent->BindAction("PressThree", IE_Pressed, this, &AGameBoardPawn::OnPress3);
+		PlayerInputComponent->BindAction("PressFour", IE_Pressed, this, &AGameBoardPawn::OnPress4);
+		PlayerInputComponent->BindAction("PressFive", IE_Pressed, this, &AGameBoardPawn::OnPress5);
+		PlayerInputComponent->BindAction("PressSix", IE_Pressed, this, &AGameBoardPawn::OnPress6);
+		PlayerInputComponent->BindAction("PressSeven", IE_Pressed, this, &AGameBoardPawn::OnPress7);
+		PlayerInputComponent->BindAction("PressEight", IE_Pressed, this, &AGameBoardPawn::OnPress8);
+		PlayerInputComponent->BindAction("PressNine", IE_Pressed, this, &AGameBoardPawn::OnPress9);
 	}
-
-
 }
 
 void AGameBoardPawn::SetColorOfSphere(int32 index, bool bPlayerOne)
@@ -226,12 +250,10 @@ void AGameBoardPawn::SetColorOfSphere(int32 index, bool bPlayerOne)
 	}
 
 
-	if (bPlayerOne)
-	{
+	if (bPlayerOne) {
 		SphereArray[index]->SetMaterial(0, BlueMaterial);
 	}
-	else
-	{
+	else {
 		SphereArray[index]->SetMaterial(0, RedMaterial);
 	}
 
@@ -244,6 +266,26 @@ void AGameBoardPawn::ResetGameBoard()
 	{
 		SphereArray[i]->SetMaterial(0, WhiteMaterial);
 	}
+	TurnCounter = 0;
+	bPlayerOne = true;
 	return;
 }
+
+void AGameBoardPawn::SetSphereLocations(){
+	
+	for (int i = 0; i < SphereArray.Num(); i++) {
+		if (i == LastPos) {
+			FVector Location = SphereArray[i]->GetRelativeLocation();
+			Location.Z = GetActorLocation().Z + 100.f;
+			SphereArray[i]->SetRelativeLocation(Location);
+		}	
+		else {
+			FVector Location = SphereArray[i]->GetRelativeLocation();
+			Location.Z = GetActorLocation().Z;
+			SphereArray[i]->SetRelativeLocation(Location);
+		}
+	}
+}
+
+
 

@@ -30,10 +30,11 @@ protected:
 	void OnPress8();
 	void OnPress9();
 
+	void OnAnyPress(int32 index);
+
 	void UpdateBoardState(int32 index);
 	bool CheckWin();
 
-	class AGameBoardPawn* GameBoard = nullptr;
 	TArray<TCHAR> BoardState;
 	int32 BoardWidth;
 
@@ -50,6 +51,10 @@ public:
 
 	// My designated area
 public:
+	int32 LastPos = 4;
+	
+	UFUNCTION(Category = "UFUNCTION")
+	void SetSphereLocations();
 
 	UFUNCTION(Category = "UFUNCTION")
 		void SetColorOfSphere(int32 index, bool bPlayerOne);
