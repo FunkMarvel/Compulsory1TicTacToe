@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "GetPawnTestActor.h"
 #include "GameBoardPawn.h"
 
-#include "GetPawnTestActor.h"
 
 // Sets default values for this component's properties
 UGetPawnTestActor::UGetPawnTestActor()

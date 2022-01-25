@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+#include "GameBoardPawn.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Containers/Array.h"
 #include "Components/StaticMeshComponent.h"
 
-#include "GameBoardPawn.h"
 
 // Sets default values
 AGameBoardPawn::AGameBoardPawn()
@@ -169,7 +169,7 @@ void AGameBoardPawn::UpdateBoardState(int32 index)
 {
 	//Updates internal game state and sphere materials.
 
-	SetColorOfSphere(index, bPlayerOne);
+	SetColorOfSphere(index);
 	UE_LOG(LogTemp, Warning, TEXT("DID FIND PAWN!!!!!!!!!\n\n\n"));
 
 	if (bPlayerOne) {
@@ -241,7 +241,7 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	}
 }
 
-void AGameBoardPawn::SetColorOfSphere(int32 index, bool bPlayerOne)
+void AGameBoardPawn::SetColorOfSphere(int32 index)
 {
 	if (index < 0 || index > SphereArray.Num())
 	{

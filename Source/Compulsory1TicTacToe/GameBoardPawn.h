@@ -57,13 +57,10 @@ public:
 	void SetSphereLocations();
 
 	UFUNCTION(Category = "UFUNCTION")
-		void SetColorOfSphere(int32 index, bool bPlayerOne);
+		void SetColorOfSphere(int32 index);
 
 	UFUNCTION(Category = "UFUNCTION")
 		void ResetGameBoard();
-
-	UFUNCTION()
-		void DebugVoid();
 	
 	int DebugInt = 0.f;
 
