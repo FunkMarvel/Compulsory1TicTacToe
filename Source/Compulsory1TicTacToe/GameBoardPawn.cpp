@@ -147,9 +147,8 @@ void AGameBoardPawn::OnPress9()
 
 void AGameBoardPawn::OnAnyPress(int32 index)
 {
-	UE_LOG(LogTemp, Warning, TEXT("PRESSU DESUUUUU!"));
 	if (BoardState[index] != 'x' && BoardState[index] != 'o') {
-		UE_LOG(LogTemp, Warning, TEXT("ACCEPTED PRESS!"));
+
 		UpdateBoardState(index);	// switch color and update game state
 		bool win = CheckWin();
 		LastPos = index;
@@ -175,22 +174,22 @@ void AGameBoardPawn::UpdateBoardState(int32 index)
 	//Updates internal game state and sphere materials.
 
 	SetColorOfSphere(index);
-	UE_LOG(LogTemp, Warning, TEXT("DID FIND PAWN!!!!!!!!!\n\n\n"));
+	//UE_LOG(LogTemp, Warning, TEXT("DID FIND PAWN!!!!!!!!!\n\n\n"));
 
 	if (bPlayerOne) {
 		BoardState[index] = 'x';
-		UE_LOG(LogTemp, Warning, TEXT("Player 1 input: "));
+		UE_LOG(LogTemp, Warning, TEXT("Player 2 input: "));
 	}
 	else {
 		BoardState[index] = 'o';
-		UE_LOG(LogTemp, Warning, TEXT("Player 2 input: "));
+		UE_LOG(LogTemp, Warning, TEXT("Player 1 input: "));
 	}
 	TurnCounter++;
 }
 
 bool AGameBoardPawn::CheckWin()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Checking for win"));
+	//UE_LOG(LogTemp, Warning, TEXT("Checking for win"));
 	// Function that checks entire board and returns a bool of value true
 	// if a win has been reached and value false if no win has been reached.
 
