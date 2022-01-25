@@ -41,8 +41,6 @@ protected:
 	void OnPress8();
 	void OnPress9();
 
-
-	bool CheckAvailability(int32 index);
 	void UpdateBoardState(int32 index);
 	bool CheckWin();
 	

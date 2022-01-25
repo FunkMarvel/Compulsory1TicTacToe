@@ -115,12 +115,6 @@ bool UGameLogicComponent::CheckWin()
 	return win;  // returns false if end of function is reached. 
 }
 
-bool UGameLogicComponent::CheckAvailability(int32 index)
-{
-	if (BoardState[index] == ' ') return true;
-	return false;
-}
-
 void UGameLogicComponent::UpdateBoardState(int32 index)
 {
 	//GameBoard = (AGameBoardPawn*)GetOwner();
