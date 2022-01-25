@@ -74,9 +74,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MyTools)
 		TArray<UStaticMeshComponent*> SphereArray;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
-		TArray<int32> WhichPlayer;
-
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		bool bPlayerTurn;*/
 

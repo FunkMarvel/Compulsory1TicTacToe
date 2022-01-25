@@ -17,7 +17,7 @@ AGameBoardPawn::AGameBoardPawn()
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MainMesh"));
 	StaticMeshComponent->SetupAttachment(GetRootComponent());
 	SphereArray.Init(NULL, 9);
-	WhichPlayer.Init(0, 9);
+	BoardState.Init(' ', 9);
 	
 	
 
@@ -58,7 +58,7 @@ AGameBoardPawn::AGameBoardPawn()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereMesh(TEXT("StaticMesh'/Game/Models/MaterialSphere.MaterialSphere'"));
 
 	//sets the mesh and start Matierial
-	int ArraySize = WhichPlayer.Num();
+	int ArraySize = SphereArray.Num();
 	if (SphereMesh.Succeeded()) {
 		for (int i = 0; i < ArraySize; i++) {
 			SphereArray[i]->SetStaticMesh(SphereMesh.Object);
