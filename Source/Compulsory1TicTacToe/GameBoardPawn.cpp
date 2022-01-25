@@ -33,8 +33,6 @@ AGameBoardPawn::AGameBoardPawn()
 	SphereArray[8] = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere9MeshComponent"));
 
 	
-
-
 	//Sets the Materials
 	static ConstructorHelpers::FObjectFinder<UMaterial> BlueMat(TEXT("Material'/Game/Materials/BlueMaterial.BlueMaterial'"));
 	BlueMaterial = BlueMat.Object;
@@ -43,7 +41,6 @@ AGameBoardPawn::AGameBoardPawn()
 	static ConstructorHelpers::FObjectFinder<UMaterial> WhiteMat(TEXT("Material'/Game/Materials/WhiteMaterial.WhiteMaterial'"));
 	WhiteMaterial = WhiteMat.Object;
 
-
 	//spring arm
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(GetRootComponent());
@@ -51,16 +48,15 @@ AGameBoardPawn::AGameBoardPawn()
 	SpringArm->SetRelativeLocation(FVector::ZeroVector);
 	SpringArm->TargetArmLength = 500.f;
 
-
+	// camera setup
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 
-
 	
-	//gets the Sphere Mesh
+	// hard coding way of getting the Sphere Mesh
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereMesh(TEXT("StaticMesh'/Game/Models/MaterialSphere.MaterialSphere'"));
 
-	//sets the mesh and start Matierial
+	//sets the mesh and start Matierial for each sphere
 	int ArraySize = SphereArray.Num();
 	if (SphereMesh.Succeeded()) {
 		for (int i = 0; i < ArraySize; i++) {
@@ -86,7 +82,7 @@ void AGameBoardPawn::BeginPlay()
 		}
 	}
 
-
+	//sets the SpringArm location, to ensure correct location
 	SpringArm->SetRelativeLocation(FVector::ZeroVector);
 	UE_LOG(LogTemp, Warning, TEXT("Welcome! Player 1 press number of chosen sphere to begin."));
 }
@@ -223,6 +219,7 @@ void AGameBoardPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//lerp the locations of sphere every frame
 	SetSphereLocations();
 
 }
@@ -248,13 +245,14 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AGameBoardPawn::SetColorOfSphere(int32 index)
 {
+	//if out of range, return with error code
 	if (index < 0 || index > SphereArray.Num())
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s SetColorOfSphere got an index higher than the sphere array size."), *GetOwner()->GetName());
 		return;
 	}
 
-
+	//change color based of active player
 	if (bPlayerOne) {
 		SphereArray[index]->SetMaterial(0, BlueMaterial);
 	}
@@ -276,6 +274,7 @@ void AGameBoardPawn::ResetGameBoard()
 	}
 	TurnCounter = 0;
 	bPlayerOne = true;
+	LastPos = -1;
 	return;
 }
 
@@ -283,12 +282,16 @@ void AGameBoardPawn::SetSphereLocations(){
 	
 	for (int i = 0; i < SphereArray.Num(); i++) {
 		if (i == LastPos) {
+			// gets the location of sphere
 			FVector Location = SphereArray[i]->GetRelativeLocation();
+			// to the height axis, lerp to main actor pos + height
 			Location.Z = FMath::FInterpTo(Location.Z, GetActorLocation().Z + Height, UGameplayStatics::GetWorldDeltaSeconds(this), 5.f);
 			SphereArray[i]->SetRelativeLocation(Location);
 		}	
 		else {
+			//gets the location of sphere
 			FVector Location = SphereArray[i]->GetRelativeLocation();
+			// to the height axis, lerp to main actor pos
 			Location.Z = FMath::FInterpTo(Location.Z, GetActorLocation().Z, UGameplayStatics::GetWorldDeltaSeconds(this), 5.f);
 			SphereArray[i]->SetRelativeLocation(Location);
 		}

@@ -51,7 +51,7 @@ public:
 
 	// My designated area
 public:
-	int32 LastPos = 4;
+	int32 LastPos = -1;
 	
 	UFUNCTION(Category = "UFUNCTION")
 	void SetSphereLocations();
