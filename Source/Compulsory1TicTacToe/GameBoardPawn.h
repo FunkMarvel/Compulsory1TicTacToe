@@ -38,7 +38,7 @@ protected:
 	TArray<TCHAR> BoardState;
 	int32 BoardWidth = 3;
 
-	bool bPlayerOne;
+	bool bPlayerOne = true;
 	int32 TurnCounter;
 
 public:
