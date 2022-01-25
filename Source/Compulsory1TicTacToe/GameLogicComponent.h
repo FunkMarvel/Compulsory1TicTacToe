@@ -43,8 +43,6 @@ protected:
 
 	void UpdateBoardState(int32 index);
 	bool CheckWin();
-	
-	UInputComponent* PlayerInputComponent;
 
 	class AGameBoardPawn* GameBoard = nullptr;
 	TArray<TCHAR> BoardState;
