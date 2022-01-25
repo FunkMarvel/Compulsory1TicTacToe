@@ -279,7 +279,7 @@ void AGameBoardPawn::SetSphereLocations(){
 	for (int i = 0; i < SphereArray.Num(); i++) {
 		if (i == LastPos) {
 			FVector Location = SphereArray[i]->GetRelativeLocation();
-			Location.Z = FMath::FInterpTo(Location.Z, GetActorLocation().Z + 100.f, UGameplayStatics::GetWorldDeltaSeconds(this), 5.f);
+			Location.Z = FMath::FInterpTo(Location.Z, GetActorLocation().Z + Height, UGameplayStatics::GetWorldDeltaSeconds(this), 5.f);
 			SphereArray[i]->SetRelativeLocation(Location);
 		}	
 		else {
