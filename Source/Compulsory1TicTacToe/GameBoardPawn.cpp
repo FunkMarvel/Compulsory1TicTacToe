@@ -320,7 +320,7 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 		//return to menu:
 		PlayerInputComponent->BindAction("ReturnToMenu", IE_Pressed, this, &AGameBoardPawn::ResetGameBoard);
-		PlayerInputComponent->BindAction("ReturnToMenu", IE_Pressed, this, &AGameBoardPawn::ReturnToMenu);
+		PlayerInputComponent->BindAction("ReturnToMenu", IE_Released, this, &AGameBoardPawn::ReturnToMenu);
 	}
 }
 
