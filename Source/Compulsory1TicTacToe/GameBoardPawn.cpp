@@ -143,20 +143,23 @@ void AGameBoardPawn::OnPress9()
 
 void AGameBoardPawn::OnAnyPress(int32 index)
 {
-	if (BoardState[index] != 'x' && BoardState[index] != 'o') {
+	if (BoardState[index] != 'x' && BoardState[index] != 'o' && !bGameEnded) {
 
 		UpdateBoardState(index);	// switch color and update game state
-		bool win = CheckWin(BoardState);
+		bool bWin = CheckWin(BoardState);
 		LastPos = index;
 
-		if (win && bPlayerOne) {
+		if (bWin && bPlayerOne) {
 			UE_LOG(LogTemp, Warning, TEXT("Player 1 wins!\nPress 'Enter' to reset."));
+			bGameEnded = true;
 		}
-		else if (win && !bPlayerOne) {
+		else if (bWin && !bPlayerOne) {
 			UE_LOG(LogTemp, Warning, TEXT("Player 2 wins!\nPress 'Enter' to reset."));
+			bGameEnded = true;
 		}
 		else if (TurnCounter >= 9) {
 			UE_LOG(LogTemp, Warning, TEXT("It's a draw!\nPress 'Enter' to reset."));
+			bGameEnded = true;
 		}
 		bPlayerOne = !bPlayerOne;
 	}
