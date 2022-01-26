@@ -41,7 +41,6 @@ protected:
 	int32 BoardWidth = 3;
 
 	bool bPlayerOne = true;
-	bool AIOn = true;
 	int32 TurnCounter;
 
 public:
@@ -100,7 +99,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		class UMaterial* WhiteMaterial;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
+		bool AIOn = true;
 
 
 };
