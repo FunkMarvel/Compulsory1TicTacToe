@@ -35,6 +35,8 @@ protected:
 	void UpdateBoardState(int32 index);
 	bool CheckWin(TArray<TCHAR>& Board);
 
+	int32 AISelection(TArray<TCHAR>& Board, float weight);
+
 	TArray<TCHAR> BoardState;
 	int32 BoardWidth = 3;
 

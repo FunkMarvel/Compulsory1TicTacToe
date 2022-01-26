@@ -214,6 +214,72 @@ bool AGameBoardPawn::CheckWin(TArray<TCHAR> &Board)
 	return win;  // returns false if end of function is reached. 
 }
 
+int32 AGameBoardPawn::AISelection(TArray<TCHAR>& Board, float weight)
+{
+	// Function making ai selection. Returns integer corresponding to selected square.
+	// Args:
+	//	&Board - TArray of TCHARs passed by refrence,
+	//			 containing the squares of the board.
+	//	weight - float between 0 and 1 corresponding to selected difficulty.
+
+	int32 Selection{};  // return variable.
+
+	// creates copy of current game board state:
+	TArray<TCHAR> TestBoard = Board;
+
+	// variables for storing indices that can be selected:
+	TArray<int32> PossibleSelections;
+	int32 PossibleWin{ -1 };  // stores index of winning move.
+	int32 PossibleLoss{ -1 };  // stores index of losing move.
+	bool MiddleFree{ false };  // stores state of middle square.
+
+
+	// looping through table:
+	for (int i = 0; i < BoardWidth * BoardWidth; i++)
+	{
+		// finds empty squares:
+		if (TestBoard[i] != 'x' && TestBoard[i] != 'o') {
+
+			// checks if current square can lead to win if selected:
+			TestBoard[i] = 'o';
+			if (CheckWin(TestBoard)) PossibleWin = i;  // stores index of winning selection.
+
+			// checks if current square can lead to loss if not selected:
+			TestBoard[i] = 'x';
+			if (CheckWin(TestBoard)) PossibleLoss = i;  // stores index of possible loss.
+
+			if (i == 4) { MiddleFree = true; } // checks if middle is free.
+			else { PossibleSelections.Add(i); }  // stores index of square if free and not middle.
+			TestBoard[i] = Board[i];  // resets value of current square to match the current state of the game.
+		}
+	}
+
+	// creates random number genenrator for ai behaviour:
+	// Draws a random real number between 0 and 1 to compare with difficulty weight:
+	float Percent = FMath::RandRange(0.f, 1.f); // A lower weight makes the ai more likely to play correct moves, and thus increases the difficulty.
+	int32 RandIndex = FMath::RandRange(0, PossibleSelections.Num() - 1);  // int distrobution for random selection.
+
+
+	if (Percent > weight && PossibleWin >= 0) {
+		// possible win is selected if random number is bigger than the difficulty weight:
+		Selection = PossibleWin;
+	}
+	else if (Percent > weight && PossibleLoss >= 0) {
+		// possible loss is prevented if random number is bigger than the difficulty weight:
+		Selection = PossibleLoss;
+	}
+	else if (MiddleFree) {
+		// middle is selected if it is free:
+		Selection = 4;
+	}
+	else {
+		// if no other selection has been made, then a random free square is chosen:
+		Selection = PossibleSelections[RandIndex];
+	}
+
+	return Selection;  // returns number of selected square.
+}
+
 // Called every frame
 void AGameBoardPawn::Tick(float DeltaTime)
 {
