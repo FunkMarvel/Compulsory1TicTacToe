@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Containers/Array.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/Engine.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -83,7 +84,7 @@ void AGameBoardPawn::BeginPlay()
 
 	//sets the SpringArm location, to ensure correct location
 	SpringArm->SetRelativeLocation(FVector::ZeroVector);
-	UE_LOG(LogTemp, Warning, TEXT("Welcome! Player 1 press number of chosen sphere to begin."));
+	GEngine->AddOnScreenDebugMessage(-10, 5, FColor::Green, TEXT("Welcome! Player 1 press number of chosen sphere to begin."));
 }
 
 void AGameBoardPawn::OnPress1()
@@ -149,21 +150,21 @@ void AGameBoardPawn::OnAnyPress(int32 index)
 		LastPos = index;
 
 		if (bWin && bPlayerOne) {
-			UE_LOG(LogTemp, Warning, TEXT("Player 1 wins!\nPress 'Enter' to reset.\nPress 'Backspace' to return to menu'."));
+			GEngine->AddOnScreenDebugMessage(-10, 5, FColor::Green, TEXT("Player 1 wins!\nPress 'Enter' to reset.\nPress 'Backspace' to return to menu'."));
 			bGameEnded = true;
 		}
 		else if (bWin && !bPlayerOne) {
-			UE_LOG(LogTemp, Warning, TEXT("Player 2 wins!\nPress 'Enter' to reset.\nPress 'Backspace' to return to menu'."));
+			GEngine->AddOnScreenDebugMessage(-10, 5, FColor::Green, TEXT("Player 2 wins!\nPress 'Enter' to reset.\nPress 'Backspace' to return to menu'."));
 			bGameEnded = true;
 		}
 		else if (TurnCounter >= 9) {
-			UE_LOG(LogTemp, Warning, TEXT("It's a draw!\nPress 'Enter' to reset.\nPress 'Backspace' to return to menu'."));
+			GEngine->AddOnScreenDebugMessage(-10, 5, FColor::Green, TEXT("It's a draw!\nPress 'Enter' to reset.\nPress 'Backspace' to return to menu'."));
 			bGameEnded = true;
 		}
 		bPlayerOne = !bPlayerOne;
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("Spot taken, try again."));
+		GEngine->AddOnScreenDebugMessage(-10, 5, FColor::Green, TEXT("Spot taken, try again."));
 	}
 	if (AIOn && !bPlayerOne && TurnCounter < 9 && !bGameEnded)
 	{
@@ -180,11 +181,11 @@ void AGameBoardPawn::UpdateBoardState(int32 index)
 
 	if (bPlayerOne) {
 		BoardState[index] = 'x';
-		UE_LOG(LogTemp, Warning, TEXT("Player 2 input: "));
+		GEngine->AddOnScreenDebugMessage(-10, 5, FColor::Green, TEXT("Player 2 input: "));
 	}
 	else {
 		BoardState[index] = 'o';
-		UE_LOG(LogTemp, Warning, TEXT("Player 1 input: "));
+		GEngine->AddOnScreenDebugMessage(-10, 5, FColor::Green, TEXT("Player 1 input: "));
 	}
 	TurnCounter++;
 }
