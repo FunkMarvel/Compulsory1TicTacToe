@@ -166,7 +166,7 @@ void AGameBoardPawn::OnAnyPress(int32 index)
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Spot taken, try again."));
 	}
-	if (AIOn && !bPlayerOne && TurnCounter < 9)
+	if (AIOn && !bPlayerOne && TurnCounter < 9 && !bGameEnded)
 	{
 		UpdateBoardState(AISelection());
 		bPlayerOne = !bPlayerOne;
