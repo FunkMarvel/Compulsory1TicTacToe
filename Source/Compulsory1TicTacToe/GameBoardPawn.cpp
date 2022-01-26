@@ -351,6 +351,7 @@ void AGameBoardPawn::ResetGameBoard()
 	}
 	TurnCounter = 0;
 	bPlayerOne = true;
+	bGameEnded = false;
 	LastPos = -1;
 	return;
 }
