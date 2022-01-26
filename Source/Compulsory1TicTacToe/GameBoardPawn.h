@@ -41,6 +41,7 @@ protected:
 	int32 BoardWidth = 3;
 
 	bool bPlayerOne = true;
+	bool bGameEnded = false;
 	int32 TurnCounter;
 
 public:
