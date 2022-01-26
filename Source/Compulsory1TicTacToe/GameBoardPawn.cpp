@@ -163,6 +163,11 @@ void AGameBoardPawn::OnAnyPress(int32 index)
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Spot taken, try again."));
 	}
+	if (AIOn && !bPlayerOne && TurnCounter < 9)
+	{
+		UpdateBoardState(AISelection(0.f));
+		bPlayerOne = !bPlayerOne;
+	}
 }
 
 void AGameBoardPawn::UpdateBoardState(int32 index)
@@ -214,7 +219,7 @@ bool AGameBoardPawn::CheckWin(TArray<TCHAR> &Board)
 	return win;  // returns false if end of function is reached. 
 }
 
-int32 AGameBoardPawn::AISelection(TArray<TCHAR>& Board, float weight)
+int32 AGameBoardPawn::AISelection(float weight)
 {
 	// Function making ai selection. Returns integer corresponding to selected square.
 	// Args:
@@ -225,7 +230,7 @@ int32 AGameBoardPawn::AISelection(TArray<TCHAR>& Board, float weight)
 	int32 Selection{};  // return variable.
 
 	// creates copy of current game board state:
-	TArray<TCHAR> TestBoard = Board;
+	TArray<TCHAR> TestBoard = BoardState;
 
 	// variables for storing indices that can be selected:
 	TArray<int32> PossibleSelections;
@@ -250,7 +255,7 @@ int32 AGameBoardPawn::AISelection(TArray<TCHAR>& Board, float weight)
 
 			if (i == 4) { MiddleFree = true; } // checks if middle is free.
 			else { PossibleSelections.Add(i); }  // stores index of square if free and not middle.
-			TestBoard[i] = Board[i];  // resets value of current square to match the current state of the game.
+			TestBoard[i] = BoardState[i];  // resets value of current square to match the current state of the game.
 		}
 	}
 

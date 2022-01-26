@@ -35,12 +35,13 @@ protected:
 	void UpdateBoardState(int32 index);
 	bool CheckWin(TArray<TCHAR>& Board);
 
-	int32 AISelection(TArray<TCHAR>& Board, float weight);
+	int32 AISelection(float weight);
 
 	TArray<TCHAR> BoardState;
 	int32 BoardWidth = 3;
 
 	bool bPlayerOne = true;
+	bool AIOn = true;
 	int32 TurnCounter;
 
 public:
