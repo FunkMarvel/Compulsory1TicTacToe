@@ -62,7 +62,6 @@ AGameBoardPawn::AGameBoardPawn()
 		for (int i = 0; i < ArraySize; i++) {
 			SphereArray[i]->SetStaticMesh(SphereMesh.Object);
 			SphereArray[i]->SetMaterial(0, WhiteMaterial);
-			//SphereArray[i]->SetRelativeLocation(FVector(100.f, 0.f, 0.f));
 
 			//Set initial board state:
 			BoardState[i] = '0' + i;
@@ -178,7 +177,6 @@ void AGameBoardPawn::UpdateBoardState(int32 index)
 	//Updates internal game state and sphere materials.
 
 	SetColorOfSphere(index);
-	//UE_LOG(LogTemp, Warning, TEXT("DID FIND PAWN!!!!!!!!!\n\n\n"));
 
 	if (bPlayerOne) {
 		BoardState[index] = 'x';
@@ -347,6 +345,7 @@ void AGameBoardPawn::SetColorOfSphere(int32 index)
 
 void AGameBoardPawn::ResetGameBoard()
 {
+	// loops through and resets all the materials
 	for (int32 i = 0; i < SphereArray.Num(); i++)
 	{
 		SphereArray[i]->SetMaterial(0, WhiteMaterial);
@@ -354,6 +353,7 @@ void AGameBoardPawn::ResetGameBoard()
 		//Set initial board state:
 		BoardState[i] = '0' + i;
 	}
+	// resetting relevant variables
 	TurnCounter = 0;
 	bPlayerOne = true;
 	bGameEnded = false;
