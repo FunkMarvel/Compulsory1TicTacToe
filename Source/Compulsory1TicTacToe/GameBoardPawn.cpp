@@ -191,52 +191,46 @@ void AGameBoardPawn::UpdateBoardState(int32 index)
 
 bool AGameBoardPawn::CheckWin(TArray<TCHAR> &Board)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Checking for win"));
 	// Function that checks entire board and returns a bool of value true
 	// if a win has been reached and value false if no win has been reached.
 
-	bool bWin{ false };  // return value.
+	bool bWin{ false };
 
-	// looping through BoardState:
 	for (int i = 0; i < BoardWidth; i++)
 	{
-		// checking row number i for win and returns true if true:
+		// checking row number i for win:
 		bWin = (Board[i * BoardWidth] == Board[i * BoardWidth + 1] && Board[i * BoardWidth] == Board[i * BoardWidth + 2]);
 		if (bWin) return bWin;
 
-		// checking column number i for win and returns true if true:
+		// checking column number i:
 		bWin = (Board[i] == Board[i + BoardWidth] && Board[i] == Board[i + 2 * BoardWidth]);
 		if (bWin) return bWin;
 	}
 
-	// checks upper-left to lower-right diagonal for win and returns true if true:
+	// checks upper-left to lower-right diagonal for win:
 	bWin = (Board[0] == Board[BoardWidth + 1] && Board[0] == Board[2 * BoardWidth + 2]);
 	if (bWin) return bWin;
 
-	// checks lower-left to upper-right diagonal for win and returns true if true:
+	// checks lower-left to upper-right diagonal for win:
 	bWin = (Board[2] == Board[BoardWidth + 1] && Board[2] == Board[2 * BoardWidth]);
 
-	return bWin;  // returns false if end of function is reached. 
+	return bWin;
 }
 
 int32 AGameBoardPawn::AISelection()
 {
 	// Function making ai selection. Returns integer corresponding to selected square.
-	// Args:
-	//	&Board - TArray of TCHARs passed by refrence,
-	//			 containing the squares of the board.
-	//	weight - float between 0 and 1 corresponding to selected difficulty.
 
-	int32 Selection{};  // return variable.
+	int32 Selection{};
 
 	// creates copy of current game board state:
 	TArray<TCHAR> TestBoard = BoardState;
 
 	// variables for storing indices that can be selected:
 	TArray<int32> PossibleSelections;
-	int32 PossibleWin{ -1 };  // stores index of winning move.
-	int32 PossibleLoss{ -1 };  // stores index of losing move.
-	bool MiddleFree{ false };  // stores state of middle square.
+	int32 PossibleWin{ -1 };
+	int32 PossibleLoss{ -1 };
+	bool MiddleFree{ false };
 
 
 	// looping through table:
@@ -247,11 +241,11 @@ int32 AGameBoardPawn::AISelection()
 
 			// checks if current square can lead to win if selected:
 			TestBoard[i] = 'o';
-			if (CheckWin(TestBoard)) PossibleWin = i;  // stores index of winning selection.
+			if (CheckWin(TestBoard)) PossibleWin = i;
 
 			// checks if current square can lead to loss if not selected:
 			TestBoard[i] = 'x';
-			if (CheckWin(TestBoard)) PossibleLoss = i;  // stores index of possible loss.
+			if (CheckWin(TestBoard)) PossibleLoss = i;
 
 			if (i == 4) { MiddleFree = true; } // checks if middle is free.
 			else { PossibleSelections.Add(i); }  // stores index of square if free and not middle.
@@ -259,22 +253,21 @@ int32 AGameBoardPawn::AISelection()
 		}
 	}
 
-	// creates random number genenrator for ai behaviour:
 	// Draws a random real number between 0 and 1 to compare with difficulty weight:
 	float Percent = FMath::RandRange(0.f, 1.f); // A lower weight makes the ai more likely to play correct moves, and thus increases the difficulty.
-	int32 RandIndex = FMath::RandRange(0, PossibleSelections.Num() - 1);  // int distrobution for random selection.
+	int32 RandIndex = FMath::RandRange(0, PossibleSelections.Num() - 1);
 
 
 	if (Percent > AIWeight && PossibleWin >= 0) {
-		// possible win is selected if random number is bigger than the difficulty weight:
+		// possible win is selected:
 		Selection = PossibleWin;
 	}
 	else if (Percent > AIWeight && PossibleLoss >= 0) {
-		// possible loss is prevented if random number is bigger than the difficulty weight:
+		// possible loss is prevented:
 		Selection = PossibleLoss;
 	}
 	else if (MiddleFree) {
-		// middle is selected if it is free:
+		// middle is selected:
 		Selection = 4;
 	}
 	else {
@@ -282,7 +275,7 @@ int32 AGameBoardPawn::AISelection()
 		Selection = PossibleSelections[RandIndex];
 	}
 
-	return Selection;  // returns number of selected square.
+	return Selection;
 }
 
 // Called every frame
