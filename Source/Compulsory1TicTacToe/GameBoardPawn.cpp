@@ -168,7 +168,7 @@ void AGameBoardPawn::OnAnyPress(int32 index)
 	}
 	if (AIOn && !bPlayerOne && TurnCounter < 9)
 	{
-		UpdateBoardState(AISelection(0.f));
+		UpdateBoardState(AISelection());
 		bPlayerOne = !bPlayerOne;
 	}
 }
@@ -267,11 +267,11 @@ int32 AGameBoardPawn::AISelection()
 	int32 RandIndex = FMath::RandRange(0, PossibleSelections.Num() - 1);  // int distrobution for random selection.
 
 
-	if (Percent > weight && PossibleWin >= 0) {
+	if (Percent > AIWeight && PossibleWin >= 0) {
 		// possible win is selected if random number is bigger than the difficulty weight:
 		Selection = PossibleWin;
 	}
-	else if (Percent > weight && PossibleLoss >= 0) {
+	else if (Percent > AIWeight && PossibleLoss >= 0) {
 		// possible loss is prevented if random number is bigger than the difficulty weight:
 		Selection = PossibleLoss;
 	}

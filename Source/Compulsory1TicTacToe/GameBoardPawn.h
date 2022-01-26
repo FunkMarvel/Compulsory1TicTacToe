@@ -57,7 +57,7 @@ public:
 	int32 LastPos = -1;
 	
 	UFUNCTION(Category = "UFUNCTION")
-	void SetSphereLocations();
+		void SetSphereLocations();
 
 	UFUNCTION(Category = "UFUNCTION")
 		void SetColorOfSphere(int32 index);
