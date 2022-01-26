@@ -35,7 +35,7 @@ protected:
 	void UpdateBoardState(int32 index);
 	bool CheckWin(TArray<TCHAR>& Board);
 
-	int32 AISelection(float weight);
+	int32 AISelection();
 
 	TArray<TCHAR> BoardState;
 	int32 BoardWidth = 3;
@@ -103,5 +103,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
 		bool AIOn = true;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyTools")
+		float AIWeight = 0.5;
 };

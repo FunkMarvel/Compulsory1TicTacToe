@@ -221,7 +221,7 @@ bool AGameBoardPawn::CheckWin(TArray<TCHAR> &Board)
 	return bWin;  // returns false if end of function is reached. 
 }
 
-int32 AGameBoardPawn::AISelection(float weight)
+int32 AGameBoardPawn::AISelection()
 {
 	// Function making ai selection. Returns integer corresponding to selected square.
 	// Args:
