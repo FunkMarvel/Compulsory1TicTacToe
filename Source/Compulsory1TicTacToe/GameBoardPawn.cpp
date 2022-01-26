@@ -150,15 +150,15 @@ void AGameBoardPawn::OnAnyPress(int32 index)
 		LastPos = index;
 
 		if (bWin && bPlayerOne) {
-			UE_LOG(LogTemp, Warning, TEXT("Player 1 wins!\nPress 'Enter' to reset."));
+			UE_LOG(LogTemp, Warning, TEXT("Player 1 wins!\nPress 'Enter' to reset.\nPress 'Backspace' to return to menu'."));
 			bGameEnded = true;
 		}
 		else if (bWin && !bPlayerOne) {
-			UE_LOG(LogTemp, Warning, TEXT("Player 2 wins!\nPress 'Enter' to reset."));
+			UE_LOG(LogTemp, Warning, TEXT("Player 2 wins!\nPress 'Enter' to reset.\nPress 'Backspace' to return to menu'."));
 			bGameEnded = true;
 		}
 		else if (TurnCounter >= 9) {
-			UE_LOG(LogTemp, Warning, TEXT("It's a draw!\nPress 'Enter' to reset."));
+			UE_LOG(LogTemp, Warning, TEXT("It's a draw!\nPress 'Enter' to reset.\nPress 'Backspace' to return to menu'."));
 			bGameEnded = true;
 		}
 		bPlayerOne = !bPlayerOne;
@@ -317,7 +317,14 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 		//reset game action:
 		PlayerInputComponent->BindAction("PressEnterReset", IE_Pressed, this, &AGameBoardPawn::ResetGameBoard);
+
+		//return to menu:
+		PlayerInputComponent->BindAction("ReturnToMenu", IE_Pressed, this, &AGameBoardPawn::MyBPEventtt);
 	}
+}
+
+void AGameBoardPawn::MyBPEventtt()
+{
 }
 
 
