@@ -325,6 +325,7 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AGameBoardPawn::MyBPEventtt()
 {
+	ResetGameBoard();
 }
 
 
