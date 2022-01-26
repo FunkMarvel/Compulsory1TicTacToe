@@ -33,7 +33,7 @@ protected:
 	void OnAnyPress(int32 index);
 
 	void UpdateBoardState(int32 index);
-	bool CheckWin();
+	bool CheckWin(TArray<TCHAR>& Board);
 
 	TArray<TCHAR> BoardState;
 	int32 BoardWidth = 3;

@@ -146,7 +146,7 @@ void AGameBoardPawn::OnAnyPress(int32 index)
 	if (BoardState[index] != 'x' && BoardState[index] != 'o') {
 
 		UpdateBoardState(index);	// switch color and update game state
-		bool win = CheckWin();
+		bool win = CheckWin(BoardState);
 		LastPos = index;
 
 		if (win && bPlayerOne) {
@@ -183,7 +183,7 @@ void AGameBoardPawn::UpdateBoardState(int32 index)
 	TurnCounter++;
 }
 
-bool AGameBoardPawn::CheckWin()
+bool AGameBoardPawn::CheckWin(TArray<TCHAR> &Board)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Checking for win"));
 	// Function that checks entire board and returns a bool of value true
@@ -195,20 +195,20 @@ bool AGameBoardPawn::CheckWin()
 	for (int i = 0; i < BoardWidth; i++)
 	{
 		// checking row number i for win and returns true if true:
-		win = (BoardState[i * BoardWidth] == BoardState[i * BoardWidth + 1] && BoardState[i * BoardWidth] == BoardState[i * BoardWidth + 2]);
+		win = (Board[i * BoardWidth] == Board[i * BoardWidth + 1] && Board[i * BoardWidth] == Board[i * BoardWidth + 2]);
 		if (win) return win;
 
 		// checking column number i for win and returns true if true:
-		win = (BoardState[i] == BoardState[i + BoardWidth] && BoardState[i] == BoardState[i + 2 * BoardWidth]);
+		win = (Board[i] == Board[i + BoardWidth] && Board[i] == Board[i + 2 * BoardWidth]);
 		if (win) return win;
 	}
 
 	// checks upper-left to lower-right diagonal for win and returns true if true:
-	win = (BoardState[0] == BoardState[BoardWidth + 1] && BoardState[0] == BoardState[2 * BoardWidth + 2]);
+	win = (Board[0] == Board[BoardWidth + 1] && Board[0] == Board[2 * BoardWidth + 2]);
 	if (win) return win;
 
 	// checks lower-left to upper-right diagonal for win and returns true if true:
-	win = (BoardState[2] == BoardState[BoardWidth + 1] && BoardState[2] == BoardState[2 * BoardWidth]);
+	win = (Board[2] == Board[BoardWidth + 1] && Board[2] == Board[2 * BoardWidth]);
 	if (win) return win;
 
 	return win;  // returns false if end of function is reached. 
