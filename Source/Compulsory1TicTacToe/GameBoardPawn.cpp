@@ -320,6 +320,10 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	}
 }
 
+void AGameBoardPawn::MyBPEvent()
+{
+}
+
 void AGameBoardPawn::SetColorOfSphere(int32 index)
 {
 	//if out of range, return with error code

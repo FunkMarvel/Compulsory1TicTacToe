@@ -52,6 +52,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void MyBPEvent();
+
 	// My designated area
 public:
 	int32 LastPos = -1;
