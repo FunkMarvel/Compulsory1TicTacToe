@@ -143,20 +143,23 @@ void AGameBoardPawn::OnPress9()
 
 void AGameBoardPawn::OnAnyPress(int32 index)
 {
-	if (BoardState[index] != 'x' && BoardState[index] != 'o') {
+	if (BoardState[index] != 'x' && BoardState[index] != 'o' && !bGameEnded) {
 
 		UpdateBoardState(index);	// switch color and update game state
-		bool win = CheckWin(BoardState);
+		bool bWin = CheckWin(BoardState);
 		LastPos = index;
 
-		if (win && bPlayerOne) {
+		if (bWin && bPlayerOne) {
 			UE_LOG(LogTemp, Warning, TEXT("Player 1 wins!\nPress 'Enter' to reset."));
+			bGameEnded = true;
 		}
-		else if (win && !bPlayerOne) {
+		else if (bWin && !bPlayerOne) {
 			UE_LOG(LogTemp, Warning, TEXT("Player 2 wins!\nPress 'Enter' to reset."));
+			bGameEnded = true;
 		}
 		else if (TurnCounter >= 9) {
 			UE_LOG(LogTemp, Warning, TEXT("It's a draw!\nPress 'Enter' to reset."));
+			bGameEnded = true;
 		}
 		bPlayerOne = !bPlayerOne;
 	}
@@ -194,29 +197,28 @@ bool AGameBoardPawn::CheckWin(TArray<TCHAR> &Board)
 	// Function that checks entire board and returns a bool of value true
 	// if a win has been reached and value false if no win has been reached.
 
-	bool win{ false };  // return value.
+	bool bWin{ false };  // return value.
 
 	// looping through BoardState:
 	for (int i = 0; i < BoardWidth; i++)
 	{
 		// checking row number i for win and returns true if true:
-		win = (Board[i * BoardWidth] == Board[i * BoardWidth + 1] && Board[i * BoardWidth] == Board[i * BoardWidth + 2]);
-		if (win) return win;
+		bWin = (Board[i * BoardWidth] == Board[i * BoardWidth + 1] && Board[i * BoardWidth] == Board[i * BoardWidth + 2]);
+		if (bWin) return bWin;
 
 		// checking column number i for win and returns true if true:
-		win = (Board[i] == Board[i + BoardWidth] && Board[i] == Board[i + 2 * BoardWidth]);
-		if (win) return win;
+		bWin = (Board[i] == Board[i + BoardWidth] && Board[i] == Board[i + 2 * BoardWidth]);
+		if (bWin) return bWin;
 	}
 
 	// checks upper-left to lower-right diagonal for win and returns true if true:
-	win = (Board[0] == Board[BoardWidth + 1] && Board[0] == Board[2 * BoardWidth + 2]);
-	if (win) return win;
+	bWin = (Board[0] == Board[BoardWidth + 1] && Board[0] == Board[2 * BoardWidth + 2]);
+	if (bWin) return bWin;
 
 	// checks lower-left to upper-right diagonal for win and returns true if true:
-	win = (Board[2] == Board[BoardWidth + 1] && Board[2] == Board[2 * BoardWidth]);
-	if (win) return win;
+	bWin = (Board[2] == Board[BoardWidth + 1] && Board[2] == Board[2 * BoardWidth]);
 
-	return win;  // returns false if end of function is reached. 
+	return bWin;  // returns false if end of function is reached. 
 }
 
 int32 AGameBoardPawn::AISelection(float weight)
