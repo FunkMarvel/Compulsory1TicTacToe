@@ -319,6 +319,7 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		PlayerInputComponent->BindAction("PressEnterReset", IE_Pressed, this, &AGameBoardPawn::ResetGameBoard);
 
 		//return to menu:
+		PlayerInputComponent->BindAction("ReturnToMenu", IE_Pressed, this, &AGameBoardPawn::ResetGameBoard);
 		PlayerInputComponent->BindAction("ReturnToMenu", IE_Pressed, this, &AGameBoardPawn::ReturnToMenu);
 	}
 }
