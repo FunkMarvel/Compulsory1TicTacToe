@@ -53,7 +53,7 @@ public:
 
 
 	UFUNCTION(BlueprintImplementableEvent)
-		void MyBPEventtt();
+		void ReturnToMenu();
 
 	// My designated area
 public:
