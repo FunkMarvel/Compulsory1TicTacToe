@@ -320,9 +320,7 @@ void AGameBoardPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	}
 }
 
-void AGameBoardPawn::MyBPEvent()
-{
-}
+
 
 void AGameBoardPawn::SetColorOfSphere(int32 index)
 {

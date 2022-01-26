@@ -53,7 +53,7 @@ public:
 
 
 	UFUNCTION(BlueprintImplementableEvent)
-		void MyBPEvent();
+		void MyBPEventtt();
 
 	// My designated area
 public:
